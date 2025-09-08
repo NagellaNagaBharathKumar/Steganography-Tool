@@ -1,4 +1,4 @@
-# Steganography Tool (Text/File Hiding)
+# Steganography Tool for Text/File Hiding
 
 This project is a simple **Steganography Web Tool** built with **Flask** that allows you to hide secret text or files inside an image using the **Least Significant Bit (LSB)** technique.  
 It provides both **encoding (hiding)** and **decoding (extracting)** features through an interactive web interface.
@@ -21,14 +21,14 @@ It provides both **encoding (hiding)** and **decoding (extracting)** features th
    pip install -r requirements.txt
 3. **Run the application**
 - **On Windows**
-   - You can either run using the batch file:
+- You can either run using the batch file:
    ```bash
    run.bat
-   - Or run directly:
+- Or run directly:
    ```bash
    python app.py
 - **On Linux/Mac**
-   - Simply run:
+- Simply run:
    ```bash
    python3 app.py
 4. **Open in browser**
@@ -42,13 +42,13 @@ It provides both **encoding (hiding)** and **decoding (extracting)** features th
 3. Choose either:
 - Enter text message
 - Upload a file
-4. Click Encode → A stego image will be downloaded directly into encoded images folder.
+4. Click Encode → A stego image will be downloaded directly into the encoded_images folder.
 
 **Decoding (Extracting Data)**
 1. Go to the Decode section.
 2. Upload the stego image.
-- If text was hidden → It will be displayed in browser.
-- If file was hidden → It will be saved in the decoded files folder.
+- If text was hidden → It will be displayed in the browser.
+- If file was hidden → It will be saved in the decoded_files folder.
 
 ## Conclusion
 
