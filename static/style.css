@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    background: #0b1020;
+    color: #e6eef6;
+    margin: 0;
+    padding: 20px;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.card {
+    background: linear-gradient(180deg, #0f1822, #0b1216);
+    border: 1px solid #1f2b35;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 14px 0;
+}
+
+label {
+    display: block;
+    margin: 8px 0;
+    color: #bcd1db;
+    font-weight: 600;
+}
+
+input[type=file],textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #21323d;
+    background: #071018;
+    color: #e6eef6;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #01c38d;
+    border: none;
+    border-radius: 8px;
+    color: #021210;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.hint {
+    color: #9fb0c3;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.flash {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+}
+
+.flash li {
+    background: #071823;
+    border-left: 4px solid #01c38d;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+}
+
+.notes {
+    color: #9fb0c3;
+    margin-top: 16px;
+    text-align: center;
+}
