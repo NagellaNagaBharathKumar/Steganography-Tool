@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Steganography Tool</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <script>
+    function toggleEncodeMethod() {
+      const method = document.querySelector('input[name="method"]:checked').value;
+      document.getElementById('textBlock').style.display = method === 'text' ? 'block' : 'none';
+      document.getElementById('fileBlock').style.display = method === 'file' ? 'block' : 'none';
+    }
+    window.addEventListener('DOMContentLoaded', function(){ toggleEncodeMethod(); });
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>🕵️ Steganography Tool</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <section class="card">
+      <h2>Encode (Text or File)</h2>
+      <form action="/encode" method="post" enctype="multipart/form-data">
+        <label>Cover Image (PNG/BMP recommended)</label>
+        <input type="file" name="cover_image" accept="image/*" required/>
+
+        <p>Select method:</p>
+        <label><input type="radio" name="method" value="text" checked onchange="toggleEncodeMethod()"> Text</label>
+        <label><input type="radio" name="method" value="file" onchange="toggleEncodeMethod()"> File</label>
+
+        <div id="textBlock">
+          <label>Secret message (text)</label>
+          <textarea name="message" placeholder="Type text to hide..."></textarea>
+        </div>
+
+        <div id="fileBlock" style="display:none">
+          <label>File to hide</label>
+          <input type="file" name="payload_file"/>
+        </div>
+
+        <button class="btn" type="submit">Create Stego Image (download)</button>
+        <p class="hint">Output will be downloaded; a copy is saved into <code>encoded_images/</code>.</p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Decode</h2>
+      <form action="/decode" method="post" enctype="multipart/form-data">
+        <label>Stego Image (PNG/BMP)</label>
+        <input type="file" name="stego_image" accept="image/*" required/>
+	<p class="hint">If a file was hidden, it will be saved into <code>encoded_images/</code>.</p>
+        <button class="btn" type="submit">Extract</button>
+      </form>
+
+      {% if decoded_text %}
+        <h3>Decoded Text</h3>
+        <textarea readonly rows="8">{{ decoded_text }}</textarea>
+      {% endif %}
+
+      <p class="hint">Output will be downloaded; a copy is saved into <code>decoded_files/</code>.</p>
+    </section>
+
+    <footer class="notes">
+      <p>Notes: Use lossless image formats (PNG/BMP). JPEG may corrupt hidden data.</p>
+    </footer>
+  </div>
+</body>
+</html>
