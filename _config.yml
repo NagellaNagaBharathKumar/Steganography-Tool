@@ -1,0 +1,18 @@
+theme: jekyll-theme-minimal
+title: Steganography Tool
+description: A pure client-side steganography tool for hiding data in images - GitHub Pages Edition
+show_downloads: false
+google_analytics: 
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+
+# Build settings
+markdown: kramdown
+exclude:
+  - app.py
+  - requirements.txt
+  - run.bat
+  - .gitignore
+  - .DS_Store
