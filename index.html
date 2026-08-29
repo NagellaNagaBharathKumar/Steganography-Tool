@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Steganography Tool</title>
+  <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: #0b1020;
+        color: #e6eef6;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
+    .card {
+        background: linear-gradient(180deg, #0f1822, #0b1216);
+        border: 1px solid #1f2b35;
+        padding: 18px;
+        border-radius: 10px;
+        margin: 14px 0;
+    }
+
+    label {
+        display: block;
+        margin: 8px 0;
+        color: #bcd1db;
+        font-weight: 600;
+    }
+
+    input[type=file],textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #21323d;
+        background: #071018;
+        color: #e6eef6;
+    }
+
+    textarea {
+        min-height: 100px;
+        font-family: monospace;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: #01c38d;
+        border: none;
+        border-radius: 8px;
+        color: #021210;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #00b377;
+    }
+
+    .btn:disabled {
+        background: #666;
+        cursor: not-allowed;
+    }
+
+    .hint {
+        color: #9fb0c3;
+        margin-top: 10px;
+        font-size: 0.95rem;
+    }
+
+    .flash {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0;
+    }
+
+    .flash li {
+        background: #071823;
+        border-left: 4px solid #01c38d;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 6px;
+    }
+
+    .flash.error li {
+        border-left-color: #ff4444;
+        background: #1a0f0f;
+    }
+
+    .notes {
+        color: #9fb0c3;
+        margin-top: 16px;
+        text-align: center;
+    }
+
+    .progress {
+        display: none;
+        width: 100%;
+        height: 4px;
+        background: #1f2b35;
+        border-radius: 2px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
+    .progress.active {
+        display: block;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #01c38d;
+        animation: progress 2s infinite;
+    }
+
+    @keyframes progress {
+        0% { width: 0%; }
+        50% { width: 100%; }
+        100% { width: 0%; }
+    }
+
+    input[type=radio] {
+        margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>🕵️ Steganography Tool</h1>
+
+    <div id="messages" class="flash" style="display: none;"></div>
+
+    <section class="card">
+      <h2>Encode (Text or File)</h2>
+      <form id="encodeForm">
+        <label>Cover Image (PNG/BMP recommended)</label>
+        <input type="file" id="coverImage" name="cover_image" accept="image/*" required/>
+
+        <p>Select method:</p>
+        <label><input type="radio" name="method" value="text" checked onchange="toggleEncodeMethod()"> Text</label>
+        <label><input type="radio" name="method" value="file" onchange="toggleEncodeMethod()"> File</label>
+
+        <div id="textBlock">
+          <label>Secret message (text)</label>
+          <textarea id="message" name="message" placeholder="Type text to hide..."></textarea>
+        </div>
+
+        <div id="fileBlock" style="display:none">
+          <label>File to hide</label>
+          <input type="file" id="payloadFile" name="payload_file"/>
+        </div>
+
+        <button class="btn" type="submit" id="encodeBtn">Create Stego Image (download)</button>
+        <div class="progress" id="encodeProgress">
+          <div class="progress-bar"></div>
+        </div>
+        <p class="hint">Output will be downloaded to your device.</p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Decode</h2>
+      <form id="decodeForm">
+        <label>Stego Image (PNG/BMP)</label>
+        <input type="file" id="stegoImage" name="stego_image" accept="image/*" required/>
+        
+        <button class="btn" type="submit" id="decodeBtn">Extract</button>
+        <div class="progress" id="decodeProgress">
+          <div class="progress-bar"></div>
+        </div>
+
+        <div id="decodedResult" style="display: none; margin-top: 20px;">
+          <h3>Decoded Result</h3>
+          <div id="resultContainer"></div>
+          <button type="button" class="btn" onclick="downloadDecodedFile()">Download File</button>
+        </div>
+
+        <p class="hint">Extracted text will appear above. If a file was hidden, you can download it.</p>
+      </form>
+    </section>
+
+    <footer class="notes">
+      <p>Notes: Use lossless image formats (PNG/BMP). JPEG may corrupt hidden data. All processing happens in your browser.</p>
+    </footer>
+  </div>
+
+  <script src="steg.js"></script>
+</body>
+</html>
